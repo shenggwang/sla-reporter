@@ -182,6 +182,16 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- create test folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.3</version>
+                <configuration>
+                    <workingDirectory>${project.build.directory}/test</workingDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

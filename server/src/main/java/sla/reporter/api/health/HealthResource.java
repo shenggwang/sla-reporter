@@ -22,6 +22,8 @@ public class HealthResource {
 
     /**
      * An get endpoint for health check.
+     *
+     * @return The response for corresponding request.
      */
     @GET
     public Response healthCheck() {

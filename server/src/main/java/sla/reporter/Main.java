@@ -1,10 +1,11 @@
 package sla.reporter;
 
 import io.netty.channel.Channel;
-import sla.reporter.api.health.HealthResource;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.netty.httpserver.NettyHttpContainerProvider;
 import org.glassfish.jersey.server.ResourceConfig;
+import sla.reporter.api.health.HealthResource;
+import sla.reporter.api.subscription.SubscriptionResource;
 
 import javax.ws.rs.core.Application;
 import java.net.URI;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 /**
  * Main server process.
+ *
  * @author Sheng Wang (shenggwangg@gmail.com)
  */
 public class Main {
@@ -33,6 +35,7 @@ public class Main {
                 public Set getSingletons() {
                     final Set<Object> set = new HashSet<>();
                     set.add(new HealthResource());
+                    set.add(new SubscriptionResource());
                     return set;
                 }
             }

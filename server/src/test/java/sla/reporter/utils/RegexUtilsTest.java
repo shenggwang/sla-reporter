@@ -9,6 +9,10 @@ import org.junit.Test;
  * @author Sheng Wang (shenggwangg@gmail.com)
  */
 public class RegexUtilsTest {
+
+    /**
+     * Ensures {@link RegexUtils#isEmailValid(String)} works as expexted.
+     */
     @Test
     public void validateEmailRegex() {
         final String CorrectEmail = "jonh@example.com";

@@ -1,10 +1,13 @@
 package sla.reporter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Optional;
+import org.json.simple.JSONObject;
 import sla.reporter.utils.RegexUtils;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -12,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Class that represents object of Subscriber.
+ *
  * @author Sheng Wang (shenggwangg@gmail.com)
  */
 public class Subscriber implements Serializable {
@@ -30,6 +34,7 @@ public class Subscriber implements Serializable {
     private final Gender gender;
     /**
      * The subscriber birthday.
+     *
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html">LocalDate</a>.
      */
     private final LocalDate birthDay;
@@ -43,7 +48,13 @@ public class Subscriber implements Serializable {
     private final String newsletterId;
 
     /**
+     * The date formatter used to convert birthday to and from String.
+     */
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    /**
      * Private constructor.
+     *
      * @param builder The subscriber builder.
      */
     private Subscriber(final Builder builder) {
@@ -56,45 +67,51 @@ public class Subscriber implements Serializable {
     }
     /**
      * Gets the email.
+     *
      * @return The email.
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
     /**
      * Gets the optional first name.
+     *
      * @return The optional first name.
      */
-    public Optional<String> getFirstName() {
-        return firstName;
+    public String getFirstName() {
+        return this.firstName.or("None");
     }
     /**
      * Gets the {@link Gender gender}.
+     *
      * @return The {@link Gender gender}.
      */
-    public Gender getGender() {
-        return gender;
+    public String getGender() {
+        return this.gender.toString();
     }
     /**
      * Gets the birthday.
+     *
      * @return The birthday.
      */
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        return this.birthDay.toString();
     }
     /**
      * Gets the birthday.
+     *
      * @return {@code true} if the subscriber consents, {@code false} otherwise.
      */
-    public boolean isConsent() {
-        return consent;
+    public String getConsent() {
+        return String.valueOf(this.consent);
     }
     /**
      * Gets the newsletter id.
+     *
      * @return the newsletter id.
      */
     public String getNewsletterId() {
-        return newsletterId;
+        return this.newsletterId;
     }
 
     @Override
@@ -102,27 +119,44 @@ public class Subscriber implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Subscriber that = (Subscriber) o;
-        return consent == that.consent
-                && Objects.equals(email, that.email)
-                && Objects.equals(birthDay, that.birthDay)
-                && Objects.equals(newsletterId, that.newsletterId);
+        return this.consent == that.consent
+                && Objects.equals(this.email, that.email)
+                && Objects.equals(this.birthDay, that.birthDay)
+                && Objects.equals(this.newsletterId, that.newsletterId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, birthDay, consent, newsletterId);
+        return Objects.hash(this.email, this.birthDay, this.consent, this.newsletterId);
     }
 
     @Override
     public String toString() {
         return "Subscriber{" +
-                "email='" + email + '\'' +
-                ", firstName=" + firstName.or("none") +
-                ", gender=" + gender +
-                ", birthDay=" + birthDay +
-                ", consent=" + consent +
-                ", newsletterId='" + newsletterId + '\'' +
+                "email='" + this.email + '\'' +
+                ", firstName=" + this.firstName.or("none") +
+                ", gender=" + this.gender +
+                ", birthDay=" + this.birthDay.format(FORMATTER) +
+                ", consent=" + this.consent +
+                ", newsletterId='" + this.newsletterId + '\'' +
                 '}';
+    }
+
+    /**
+     * Gets (@link JsonObject} from subscriber.
+     *
+     * @return The {@link JSONObject} of this subscriber.
+     */
+    @JsonIgnore
+    public JSONObject getJsonObject() {
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", this.email);
+        jsonObject.put("firstName", this.firstName.or("none"));
+        jsonObject.put("gender", this.gender.toString());
+        jsonObject.put("birthDay", this.birthDay.format(FORMATTER));
+        jsonObject.put("consent", String.valueOf(this.consent));
+        jsonObject.put("newsletterId", this.newsletterId);
+        return jsonObject;
     }
 
     /**
@@ -136,16 +170,19 @@ public class Subscriber implements Serializable {
         private String email;
         /**
          * The optional subscriber first name.
+         *
          * @implSpec By default the optional is absent.
          */
         private Optional<String> firstName = Optional.absent();
         /**
          * The optional subscriber {@link Gender gender}.
+         *
          * @implSpec By default the gender is {@link Gender#NONE}.
          */
         private Gender gender = Gender.NONE;
         /**
          * The subscriber birthday.
+         *
          * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html">LocalDate</a>.
          */
         private LocalDate birthDay;
@@ -160,6 +197,8 @@ public class Subscriber implements Serializable {
 
         /**
          * Sets the email.
+         *
+         * @return This builder instance.
          */
         public Builder email(final String email) {
             this.email = email;
@@ -167,6 +206,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Sets the first name.
+         *
+         * @return This builder instance.
          */
         public Builder firstName(final String firstName) {
             this.firstName = Optional.of(firstName);
@@ -174,6 +215,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Sets the gender.
+         *
+         * @return This builder instance.
          */
         public Builder gender(final Gender gender) {
             this.gender = gender;
@@ -181,6 +224,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Sets the birthday.
+         *
+         * @return This builder instance.
          */
         public Builder birthDay(final LocalDate birthDay) {
             this.birthDay = birthDay;
@@ -188,6 +233,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Sets the consent.
+         *
+         * @return This builder instance.
          */
         public Builder consent(final boolean consent) {
             this.consent = consent;
@@ -195,6 +242,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Sets the newsletter id.
+         *
+         * @return This builder instance.
          */
         public Builder newsletterId(final String newsletterId) {
             this.newsletterId = newsletterId;
@@ -202,6 +251,8 @@ public class Subscriber implements Serializable {
         }
         /**
          * Builds a new {@link Subscriber} from the information supplied to this {@link Subscriber.Builder}.
+         *
+         * @return A new subscriber instance.
          */
         public Subscriber build() {
             checkNotNull(this.email, "Email can't be null");
@@ -209,6 +260,28 @@ public class Subscriber implements Serializable {
             checkNotNull(this.birthDay, "Birthday can't be null");
             checkNotNull(this.newsletterId, "NewsletterId can't be null");
             return new Subscriber(this);
+        }
+
+        /**
+         * Fill a builder with attribute values from the provided {@link JSONObject}.
+         *
+         * @param jsonObject The expected{@link JSONObject}.
+         * @return This builder instance.
+         */
+        public Builder fromJsonObject(final JSONObject jsonObject) {
+            checkNotNull(jsonObject.get("email"), "Email can't be null");
+            checkNotNull(jsonObject.get("firstName"), "Birthday can't be null");
+            checkNotNull(jsonObject.get("gender"), "Birthday can't be null");
+            checkNotNull(jsonObject.get("birthDay"), "Birthday can't be null");
+            checkNotNull(jsonObject.get("consent"), "Birthday can't be null");
+            checkNotNull(jsonObject.get("newsletterId"), "NewsletterId can't be null");
+            this.email = (String) jsonObject.get("email");
+            this.firstName = Optional.of((String) jsonObject.get("firstName"));
+            this.gender = Gender.fromString((String) jsonObject.get("gender")).or(Gender.NONE);
+            this.birthDay = LocalDate.parse((String) jsonObject.get("birthDay"), FORMATTER);
+            this.consent = Boolean.parseBoolean((String) jsonObject.get("consent"));
+            this.newsletterId = (String) jsonObject.get("newsletterId");
+            return this;
         }
     }
 }

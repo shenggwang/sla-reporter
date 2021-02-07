@@ -3,7 +3,6 @@ package sla.reporter.api.health;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.media.sse.SseFeature;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
@@ -38,7 +37,6 @@ public class HealthResourceTest extends JerseyTest {
                 final Set<Object> set = new HashSet<>();
                 set.add(new HealthResource());
                 set.add(new JacksonFeature());
-                set.add(new SseFeature());
                 return set;
             }
         };

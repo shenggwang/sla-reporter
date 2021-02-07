@@ -21,6 +21,7 @@ public final class RegexUtils {
 
     /**
      * Checks whether the provided email has valid syntax.
+     *
      * @param email The email.
      * @return {@code true} if the email has valid syntax, {@code false} otherwise.
      */
