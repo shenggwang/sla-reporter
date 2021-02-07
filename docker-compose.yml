@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  server:
+    container_name: server
+    build:
+      context: ./server
+    image: server:1.0.0
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - 5000:5000 # remote debug
+      - 8080:8080 # rest api
+    networks:
+      - main
+
+networks:
+  main:
