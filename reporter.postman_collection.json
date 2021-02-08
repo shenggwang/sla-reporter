@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "3d78c923-fd98-41d9-bb43-f299ba3b3024",
+		"name": "reporter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get subscription",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiJrZXlJZCIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJsZWRnZXJhaS5uZXQiLCJhdWQiOiJDbGllbnQiLCJleHAiOjE1ODg0Mjk2NTcsImp0aSI6ImlLS3JWVUptTFlaZkszTzZfZzRTOEEiLCJpYXQiOjE1ODg0MjYwNTcsIm5iZiI6MTU4ODQyNTkzNywic3ViIjoic2hlbmciLCJlbWFpbCI6InNoZW5nLndhbmdAbGVkZ2VyYWkubmV0In0.sOheJSoiSoSTY2_y_UEkt95PxZEX_LqAsRKouB1-Q7cSOl7wAkLXerNQ6UFDUF9EbdKACmonZyBQ1Az-EYcPba5vKjjjaPCuSAUHRdC8qk4GJ6CSkLtY1XvTJ2uhSerWqOaMsl9-v9NmS8TZE6Ov2i2152gzlq3Sr9sD8zUtkputunCpMSvVMj-vf78gEtOREffRZmMO9zB9cwyNsrk9d0HQ2VwDI_Jcj0DWbj8MJsktnWwIUnTf4vui8NzhsEWw47vPaXkzm25jelj91p0Qce1NU3BTYNxtg1WhOn2DI7zepWa7lZlcoXb1P0PDuFeYsMGu8z3OkKhISDNqa7-1dQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "board",
+						"type": "text",
+						"value": "TODO",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/subscription/john@example.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription",
+						"john@example.com"
+					]
+				},
+				"description": "Token test"
+			},
+			"response": []
+		},
+		{
+			"name": "add subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiJrZXlJZCIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJsZWRnZXJhaS5uZXQiLCJhdWQiOiJDbGllbnQiLCJleHAiOjE1ODg0Mjk2NTcsImp0aSI6ImlLS3JWVUptTFlaZkszTzZfZzRTOEEiLCJpYXQiOjE1ODg0MjYwNTcsIm5iZiI6MTU4ODQyNTkzNywic3ViIjoic2hlbmciLCJlbWFpbCI6InNoZW5nLndhbmdAbGVkZ2VyYWkubmV0In0.sOheJSoiSoSTY2_y_UEkt95PxZEX_LqAsRKouB1-Q7cSOl7wAkLXerNQ6UFDUF9EbdKACmonZyBQ1Az-EYcPba5vKjjjaPCuSAUHRdC8qk4GJ6CSkLtY1XvTJ2uhSerWqOaMsl9-v9NmS8TZE6Ov2i2152gzlq3Sr9sD8zUtkputunCpMSvVMj-vf78gEtOREffRZmMO9zB9cwyNsrk9d0HQ2VwDI_Jcj0DWbj8MJsktnWwIUnTf4vui8NzhsEWw47vPaXkzm25jelj91p0Qce1NU3BTYNxtg1WhOn2DI7zepWa7lZlcoXb1P0PDuFeYsMGu8z3OkKhISDNqa7-1dQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "board",
+						"type": "text",
+						"value": "TODO",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"john@example.com\",\n    \"firstName\": \"John\",\n    \"gender\": \"male\",\n    \"birthDay\": \"01-08-2000\",\n    \"consent\": \"true\",\n    \"newsletterId\": \"testdsfsd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/subscription",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription"
+					]
+				},
+				"description": "Token test"
+			},
+			"response": []
+		}
+	]
+}

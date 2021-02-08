@@ -101,3 +101,6 @@ mvn clean install
 ```shell
 java -jar <compilled file>
 ```
+
+## Postman
+There is a _postman_collection_ file which contains samples of get and add subscriber
